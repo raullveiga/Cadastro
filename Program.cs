@@ -18,15 +18,26 @@ namespace arquivocsv
             Console.Write("Digite o seu E-mail: ");
             email = Console.ReadLine();
 
-            Console.Write("Digite sua idade");
+            Console.Write("Digite sua idade: ");
             idade = Int16.Parse(Console.ReadLine());
             
-            //Criando o arquivo csv para gravar os dados.
-            StreamWriter arquivo = new StreamWriter("dados.csv", true);
+            FileInfo ar = new FileInfo("dados_cabecalho.csv");
             
+            StreamWriter arquivo;
+        
+            if(ar.Exists){
+            //Criando o arquivo csv para gravar os dados.
+            arquivo = new StreamWriter("dados_cabecalho.csv", true);
             arquivo.WriteLine(nome+";"+email+";"+idade+";"+DateTime.Now.ToShortDateString());
-            arquivo.Close();
+            }
+            //Escreve o Cabeçalho caso seja a primeira execução.
+            else{
+            arquivo = new StreamWriter("dados_cabecalho.csv", true);
+            arquivo.WriteLine("Nome;E-mail;Idade;Data;");
+            arquivo.WriteLine(nome+";"+email+";"+idade+";"+DateTime.Now.ToShortDateString());
+            }
 
+            arquivo.Close();
              
         }
     }
